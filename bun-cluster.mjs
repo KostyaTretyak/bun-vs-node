@@ -9,7 +9,7 @@ if (cpus > 1) {
     });
   }
 } else {
-  await import('./node.mjs');
+  await import('./bun.mjs');
 }
 
 function kill() {
