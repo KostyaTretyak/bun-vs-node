@@ -1,11 +1,15 @@
 const cpus = navigator.hardwareConcurrency;
 const buns = new Array(cpus);
 
-for (let i = 0; i < cpus; i++) {
-  buns[i] = Bun.spawn(["bun", "bun.mjs"], {
-    stdio: ["inherit", "inherit", "inherit"],
-    env: { ...process.env },
-  });
+if (cpus > 1) {
+  for (let i = 0; i < cpus; i++) {
+    buns[i] = Bun.spawn(["bun", "bun.mjs"], {
+      stdio: ["inherit", "inherit", "inherit"],
+      env: { ...process.env },
+    });
+  }
+} else {
+  await import('./node.mjs');
 }
 
 function kill() {
